@@ -1,6 +1,13 @@
-import app
+import customtkinter as ctk
 
-if __name__ == '__main__':
+from auth import Auth
+
+ctk.set_appearance_mode('dark')
+ctk.set_default_color_theme('green')
   
-  _app = app.App()
-  _app.run()
+def open_auth(auth) -> None:
+  auth.run()
+  
+if __name__ == '__main__':
+  auth = Auth(ctk)
+  open_auth(auth)

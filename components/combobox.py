@@ -11,3 +11,11 @@ class ComboBox(ctk.CTkFrame):
     self.__combobox.grid(row=1, column=0, pady=0, padx=0, sticky='we')
     
     self.grid_columnconfigure(0, weight=1)
+    
+  @property
+  def text(self):
+    return self.__combobox.get()
+  
+  @text.setter
+  def text(self, value):
+    self.__combobox.set(value)
