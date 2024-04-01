@@ -1,7 +1,7 @@
 class AuthConfig:
   
-  _LOGIN_SIZE = {'width':400, 'height': 360}
-  _REGISTRATION_SIZE = {'width':400, 'height': 620}
+  _LOGIN_SIZE = {'width':400, 'height': 380}
+  _REGISTRATION_SIZE = {'width':400, 'height': 680}
   
   @staticmethod      
   def login_size():

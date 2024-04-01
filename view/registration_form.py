@@ -28,11 +28,11 @@ class RegistrationForm(ctk.CTkFrame):
     
     self._entry_password = TextInput(master=self, name='PASSWORD', label='Password', require=True)
     self._entry_password.grid(row=4, column=0, pady=10, padx=padx, sticky='we')
-    self._entry_password.hide_text()
+    self._entry_password.add_hide_event()
     
     self._entry_repassword = TextInput(master=self, label='Re password', require=True)
     self._entry_repassword.grid(row=5, column=0, pady=10, padx=padx, sticky='we')
-    self._entry_repassword.hide_text()
+    self._entry_repassword.add_hide_event()
     
     self._entry_password.on_text_changed(self._controller.set_password, self._entry_repassword)
     self._entry_repassword.on_text_changed(self._controller.set_repassword, self._entry_password)
