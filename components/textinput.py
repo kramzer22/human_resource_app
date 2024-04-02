@@ -22,11 +22,8 @@ class TextInput(ctk.CTkFrame):
     
     self.grid_columnconfigure(2, weight=1)
     
-  def on_text_changed(self, command, ref_obj=None):
-    self._entry.bind("<KeyRelease>", lambda event: command(event, obj=self, ref_obj=ref_obj))
-    
-  def set_note(self, text):
-    self._note.configure(text=text)
+  def set_text_changed(self, command):
+    self._entry.bind("<KeyRelease>", lambda event: command(event))
     
   def add_hide_event(self):
     if not self._button:
@@ -44,6 +41,12 @@ class TextInput(ctk.CTkFrame):
       
   def hide_text(self, event):
     self._entry.configure(show='*')
+    
+  def set_note(self, text):
+    self._note.configure(text=text)
+    
+  def focus(self):
+    self._entry.focus()
   
   @property   
   def text(self):
@@ -53,12 +56,3 @@ class TextInput(ctk.CTkFrame):
   def text(self, text):
     self._entry.delete(0, 'end') 
     self._entry.insert(0, text)
-    
-  @property
-  def note(self):
-    return self.__note.get()
-  
-  @note.setter
-  def note(self, text):
-    self.__note.delete(0, 'end')
-    self.__entry.insert(0, text)

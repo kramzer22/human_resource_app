@@ -1,3 +1,5 @@
+from typing import List
+
 class User:
   def __init__(self) -> None:
     self._username = ''
@@ -10,10 +12,30 @@ class User:
     self._is_valid_email = False
     self._is_valid_mobile = False
     self._is_valid_password = False
-    self._is_valid_repassword = False
     
   def __str__(self):
     return f'User: {self._username}\nEmail: {self._email}\nMobile: {self._mobile}\nPassword: {self._password}'
+  
+  def clear(self):
+    self._username = ''
+    self._email = ''
+    self._mobile = ''
+    self._password = ''
+    
+    self._is_valid_username = False
+    self._is_valid_email = False
+    self._is_valid_mobile = False
+    self._is_valid_password = False
+    
+  def flags(self) -> List[bool]:
+    flags = [
+      self._is_valid_username,
+      self._is_valid_email,
+      self._is_valid_mobile,
+      self.is_valid_password
+      ]
+    
+    return flags
     
   @property
   def username(self):
@@ -86,13 +108,5 @@ class User:
   @repassword.setter
   def repassword(self, value):
     self._repassword = value
-    
-  @property
-  def is_valid_repassword(self):
-    return self._is_valid_repassword
-  
-  @is_valid_repassword.setter
-  def is_valid_repassword(self, value):
-    self._is_valid_repassword = value 
                                    
     

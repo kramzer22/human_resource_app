@@ -16,5 +16,5 @@ class LinkedLabel(ctk.CTkLabel):
   def on_leave(self, e):
     self.configure(text_color=self.__default_text_color, font=('Calibri', 14, 'normal'))
     
-  def click(self, command, frame):
-    self.bind('<Button-1>', lambda event: command(frame))
+  def set_click(self, command):
+    self.bind('<Button-1>', lambda event: command())

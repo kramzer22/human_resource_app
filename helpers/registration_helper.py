@@ -1,5 +1,7 @@
 import re
 
+from typing import List
+
 from module.util_module import CheckerFunctions as cf
 
 class RegistrationChecker:
@@ -17,7 +19,8 @@ class RegistrationChecker:
           return False, 'Username must not exceed 30 char long'
         else:
           return True, ''
-      
+    
+    @staticmethod
     def check_email_entry(email):
       if len(email) <= 0:
         return False, ''
@@ -25,7 +28,8 @@ class RegistrationChecker:
         return False, 'Invalid email format'
       else:
         return True, ''
-      
+    
+    @staticmethod
     def check_mobile_entry(number):
       if len(number) <= 0:
         return True, ''
@@ -33,7 +37,8 @@ class RegistrationChecker:
         return False, 'Invalid mobile number'
       else:
         return True, ''
-      
+    
+    @staticmethod 
     def check_password_entry(password, repassword):
       if len(password) <= 0:
         return False, ''
@@ -44,12 +49,14 @@ class RegistrationChecker:
       else:
         return True, ''
       
-    def check_repassword_entry(password, repassword):
-      if len(password) <= 0:
-        return False, ''
-      elif len(repassword) > 0 and password != repassword:
-        return False, 'Password mismatch'
-      else:
-        return True, ''
+    @staticmethod
+    def check_registration_flags(flags: List[bool]) -> bool:
+      result = True
       
+      for flag in flags:
+        if flag == False:
+          result = False
+          break
+          
+      return result
        
