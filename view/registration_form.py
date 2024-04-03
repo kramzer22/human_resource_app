@@ -3,14 +3,16 @@ import customtkinter as ctk
 from components.textinput import TextInput
 from components.linkedlabel import LinkedLabel
 
+from controller.registration_controller import RegistrationController
+
 class RegistrationForm(ctk.CTkFrame):
-  def __init__(self, master, reg_controller, auth_controller, pady=0, padx=0):
+  def __init__(self, master, parent, pady=0, padx=0):
     super().__init__(master=master)
     
     self._NAME = 'REGISTRATION_FORM'
     
-    self._reg_controller = reg_controller
-    self._auth_controller = auth_controller
+    self._parent = parent
+    self._reg_controller = RegistrationController(self)
 
     self._header = ctk.CTkLabel(master=self, text="User registration", font=('Calibri', 24), anchor='w')
     self._header.grid(row=0, column=0, pady=10, padx=padx, sticky='we')
@@ -39,13 +41,12 @@ class RegistrationForm(ctk.CTkFrame):
     
     self._link_login = LinkedLabel(master=self, text="Already a member? Click here to login", anchor='e')
     self._link_login.grid(row=6, column=0, pady=10, padx=padx, sticky='e')
-    self._link_login.set_click(self._auth_controller.got_to_login_form)
+    self._link_login.set_click_event(parent.switch_to_login_form)
     
     self._save = ctk.CTkButton(master=self, text='Register', font=('Calibri', 16), width=80, height=40, command=self._reg_controller.register_user)
     self._save.grid(row=7, column=0, pady=10, padx=0)
     
     self.grid_columnconfigure(0, weight=1)
-    
     
   def clear_form(self):
     self.user = ''
@@ -59,7 +60,28 @@ class RegistrationForm(ctk.CTkFrame):
     self.set_mobile_note('')
     self.set_password_note('')
     
+    self.user_focus()
+    
+  def notification(self, title, message, button_type):
+    self._parent.show_notification(title, message, button_type)
+    
+  def set_userdata_to_default(self):
+    self._reg_controller.set_userdata_to_default()
+    
+  def user_focus(self):
     self._entry_user.focus()
+    
+  def email_focus(self):
+    self._entry_email.focus()
+    
+  def mobile_focus(self):
+    self._entry_mobile.focus()
+    
+  def password_focus(self):
+    self._entry_password.focus()
+  
+  def repassword_focus(self):
+    self._entry_repassword.focus()
     
   @property
   def name(self):

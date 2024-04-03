@@ -33,7 +33,7 @@ class CheckerFunctions:
 
     @staticmethod
     def is_email_format(email):
-        pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+        pattern = r'^[a-zA-Z0-9]+[a-zA-Z0-9.%\-\+]*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}$'
         return bool(re.match(pattern, email))
     
     @staticmethod

@@ -27,7 +27,7 @@ class TextInput(ctk.CTkFrame):
     
   def add_hide_event(self):
     if not self._button:
-      self._button = ctk.CTkButton(master=self, text='view', width=28, height=28, font=('Calibri', 12))
+      self._button = ctk.CTkButton(master=self, text='view', width=28, height=28, font=('Calibri', 12), fg_color='transparent', border_width=1)
       self._button.grid(row=1, column=0, columnspan=3, pady=2, padx=(0, 4), sticky='e')
       self._button.lift()
       
