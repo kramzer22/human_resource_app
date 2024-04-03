@@ -41,7 +41,7 @@ class RegistrationForm(ctk.CTkFrame):
     
     self._link_login = LinkedLabel(master=self, text="Already a member? Click here to login", anchor='e')
     self._link_login.grid(row=6, column=0, pady=10, padx=padx, sticky='e')
-    self._link_login.set_click_event(parent.switch_to_login_form)
+    self._link_login.set_click_event(self.switch_to_login_form)
     
     self._save = ctk.CTkButton(master=self, text='Register', font=('Calibri', 16), width=80, height=40, command=self._reg_controller.register_user)
     self._save.grid(row=7, column=0, pady=10, padx=0)
@@ -62,8 +62,19 @@ class RegistrationForm(ctk.CTkFrame):
     
     self.user_focus()
     
-  def notification(self, title, message, button_type):
-    self._parent.show_notification(title, message, button_type)
+  def disable(self):
+    self._link_login.disable()
+    self._save.configure(state='disabled')
+    
+  def enable(self):
+    self._link_login.enable()
+    self._save.configure(state='normal')
+    
+  def switch_to_login_form(self):
+    self._parent.switch_to_login_form()
+    
+  def notification(self, title, message, button_type, method):
+    self._parent.show_notification(title, message, button_type, method)
     
   def set_userdata_to_default(self):
     self._reg_controller.set_userdata_to_default()

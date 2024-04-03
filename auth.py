@@ -37,11 +37,15 @@ class Auth:
     # self.__root.geometry(f'+{self.__x_pos}+{self.__y_pos}')
     self._root.mainloop()
     
-  def show_notification(self, title, message, button_type):
-    notification = Notification(self, button_type=button_type, title=title, message=message)
-  
-  def notification_choice(self, choice):
-    print(f'notification choice is:{choice}')
+  def disable_frames(self):
+    self._registration_form.disable()
+    
+  def enable_frames(self):
+    self._registration_form.enable()
+    
+  def show_notification(self, title, message, button_type, method=None):
+    notification = Notification(self._root, button_type=button_type, title=title, message=message)
+    notification.add_method_to_on_click(method)
     
   def switch_to_registration_form(self):
     self.clear_registration_form()

@@ -3,9 +3,9 @@ import customtkinter as ctk
 
 class Notification(ctk.CTkFrame):
   def __init__(self, master, button_type, title: str='', message: str='',):
-    super().__init__(master=master._root, width=240, height=200, border_width=1)
+    super().__init__(master=master, width=240, height=200, border_width=1)
 
-    self._master = master
+    self._method = None
     
     self._label_title = ctk.CTkLabel(master=self, text=title, font=('Calibri', 16), width=240)
     self._label_title.pack(side='top', fill='x', pady=(20,0), padx=10)
@@ -28,7 +28,10 @@ class Notification(ctk.CTkFrame):
     # self.grid_columnconfigure(1, width=1)
     # self.grid_rowconfigure(1, weight=1)
     
-    self.center_self_from_parent(master._root)
+    self.center_self_from_parent(master)
+    
+  def add_method_to_on_click(self, method):
+    self._method = method
     
   def center_self_from_parent(self, master):
     window_width = master.winfo_width()
@@ -44,7 +47,7 @@ class Notification(ctk.CTkFrame):
     self.lift()
     
   def on_click(self, button_clicked):
-    self._master.notification_choice(button_clicked)
+    self._method(button_clicked)
     self.destroy()
 
     
