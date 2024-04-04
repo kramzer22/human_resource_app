@@ -44,6 +44,9 @@ class LoginForm(ctk.CTkFrame):
     
   def messagebox(self, title, message, option1, option2=None):
     return self._parent.messagebox(title, message, option1, option2)
+  
+  def on_login(self):
+    self._parent.on_login()
     
   @property
   def user(self):

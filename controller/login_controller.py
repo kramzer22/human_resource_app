@@ -40,6 +40,7 @@ class LoginController:
         self._login_view.clear_form()
         self._user_login.clear()
         
-        print('Welcome user')
         result = self._login_view.messagebox('Login successful', 'welcome!', 'Proceed')
-  
+        if result == 'Proceed':
+          
+          self._login_view.on_login()

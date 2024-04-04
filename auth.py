@@ -11,8 +11,8 @@ from components.notification import Notification
 from controller.auth_controller import AuthController
 class Auth:
   
-  def __init__(self, ctk):
-    
+  def __init__(self, ctk, master):   
+    self._master = master
     self._services = Services()
     
     self._auth_cotroller = AuthController(self)
@@ -86,6 +86,18 @@ class Auth:
   def resize_frame(self, size) -> None:
     self._root.geometry(f'{size['width']}x{size['height']}')
     
+  def on_login(self):
+    self._master.open_app()
+    
+  def close(self):
+    try:
+        if self._root.winfo_exists():
+            self._root.destroy()
+    except Exception as e:
+        print(f"Error closing window: {e}")
+    
+  def hide_window(self):
+    self._root.withdraw()
     
     
   
