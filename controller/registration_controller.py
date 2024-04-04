@@ -56,6 +56,8 @@ class RegistrationController:
       is_completed, err = regservices.save_user(self._user)
       
       if is_completed == False:
+        if not err['field']:
+          self._registration_view.set_user_note('Internal error problem.')
         if err['field'] == 'username':
           # print(f'{err['message']}: field={err['field']} - value={err['value']}')
           self._registration_view.set_user_note('Username is already taken.')
@@ -66,8 +68,6 @@ class RegistrationController:
         elif err['field'] == 'mobile':
           self._registration_view.set_mobile_note('Mobile is already registered.')
           self._registration_view.password_focus()
-        else:
-          self._registration_view.set_user_note('Internal error problem.')
       else:
         self._registration_view.clear_form()
         self._user.clear()

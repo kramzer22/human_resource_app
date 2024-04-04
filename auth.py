@@ -45,12 +45,12 @@ class Auth:
   def enable_frames(self):
     self._registration_form.enable()
     
-  def messagebox(self, title, message, option1, option2=None):
+  def messagebox(self, title, message, option1, option2=None, icon=None):
     msg = None
     if not option2:
-      msg = CTkMessagebox(title=title, message=message, option_1=option1)
+      msg = CTkMessagebox(master=self._root, title=title, message=message, icon=icon, option_1=option1, button_height=40, button_width=80, topmost=False)
     else:
-      msg = CTkMessagebox(title=title, message=message, option_1=option1, option_2=option2)    
+      msg = CTkMessagebox(master=self._root, title=title, icon=icon, message=message, option_1=option1, option_2=option2, button_height=40, button_width=80, topmost=False)    
     return msg.get()
     
   def switch_to_registration_form(self):
