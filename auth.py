@@ -1,3 +1,5 @@
+from CTkMessagebox import CTkMessagebox
+
 from helpers.services import Services
 from module.util_module import DisplayFunctions
 
@@ -43,9 +45,13 @@ class Auth:
   def enable_frames(self):
     self._registration_form.enable()
     
-  def show_notification(self, title, message, button_type, method=None):
-    notification = Notification(self._root, button_type=button_type, title=title, message=message)
-    notification.add_method_to_on_click(method)
+  def messagebox(self, title, message, option1, option2=None):
+    msg = None
+    if not option2:
+      msg = CTkMessagebox(title=title, message=message, option_1=option1)
+    else:
+      msg = CTkMessagebox(title=title, message=message, option_1=option1, option_2=option2)    
+    return msg.get()
     
   def switch_to_registration_form(self):
     self.clear_registration_form()

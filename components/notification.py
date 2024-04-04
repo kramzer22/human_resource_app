@@ -1,11 +1,14 @@
-from typing import Any
 import customtkinter as ctk
+import threading
+import time
+from typing import Any
 
 class Notification(ctk.CTkFrame):
   def __init__(self, master, button_type, title: str='', message: str='',):
     super().__init__(master=master, width=240, height=200, border_width=1)
 
-    self._method = None
+    self._master = master
+    self._complete = False
     
     self._label_title = ctk.CTkLabel(master=self, text=title, font=('Calibri', 16), width=240)
     self._label_title.pack(side='top', fill='x', pady=(20,0), padx=10)
@@ -28,7 +31,14 @@ class Notification(ctk.CTkFrame):
     # self.grid_columnconfigure(1, width=1)
     # self.grid_rowconfigure(1, weight=1)
     
-    self.center_self_from_parent(master)
+  def show_notificication(self):
+    ctk.CTkToplevel
+    
+    thread = threading.Thread(target=lambda: self.start_thread())
+  
+  def start_thread(self):
+    while self._complete == False:
+      time.sleep(50)
     
   def add_method_to_on_click(self, method):
     self._method = method

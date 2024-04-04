@@ -73,8 +73,8 @@ class RegistrationForm(ctk.CTkFrame):
   def switch_to_login_form(self):
     self._parent.switch_to_login_form()
     
-  def notification(self, title, message, button_type, method):
-    self._parent.show_notification(title, message, button_type, method)
+  def messagebox(self, title, message, option1, option2=None):
+    return self._parent.messagebox(title, message, option1, option2)
     
   def set_userdata_to_default(self):
     self._reg_controller.set_userdata_to_default()

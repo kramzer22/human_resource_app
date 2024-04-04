@@ -1,3 +1,5 @@
+from CTkMessagebox import CTkMessagebox
+
 from model.user import User
 
 from helpers.registration_helper import RegistrationChecker as regcheck
@@ -50,9 +52,7 @@ class RegistrationController:
     self._registration_view.set_password_note(note)
     
   def register_user(self):
-    if regcheck.check_registration_flags(self._user.flags()):
-      self._registration_view.disable()
-         
+    if regcheck.check_registration_flags(self._user.flags()):       
       is_completed, err = regservices.save_user(self._user)
       
       if is_completed == False:
@@ -68,18 +68,15 @@ class RegistrationController:
           self._registration_view.password_focus()
         else:
           self._registration_view.set_user_note('Internal error problem.')
-          
-        self._registration_view.enable()
       else:
         self._registration_view.clear_form()
         self._user.clear()
-        self._registration_view.notification("Registration comlete", "Registered  account can now proceed to login. Proceed to login?", 1, self.notification_registration_choice) 
+        
+        result = self._registration_view.messagebox('Registration complete', 'Proceed to login page?', 'Yes', 'No')
+        
+        print(result)
+        if result == 'Yes':
+          self._registration_view.switch_to_login_form()     
     else:
       print('bad')
-      
-  def notification_registration_choice(self, choice):
-    if choice == 'yes':
-      self._registration_view.switch_to_login_form()
-      
-    self._registration_view.enable()
     
