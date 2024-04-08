@@ -2,6 +2,7 @@ import customtkinter as ctk
 
 from components.textinput import TextInput
 from components.linkedlabel import LinkedLabel
+from components.loadingbutton import LoadingButton
 
 from controller.login_controller import LoginController
 
@@ -30,7 +31,8 @@ class LoginForm(ctk.CTkFrame):
     self._link_register.grid(row=3, column=0, pady=10, padx=padx, sticky='e')
     self._link_register.attach_handler_to_click_event(handler=self._master.switch_to_registration_form)
     
-    self._button_proceed = ctk.CTkButton(master=self, text='Proceed', font=('Calibri', 16), width=80, height=40, command=self._login_controller.initialize_user_login)
+    self._button_proceed = LoadingButton(master=self, text='Proceed', font=('Calibri', 16), width=80, height=40)
+    self._button_proceed.attach_handler_to_click_event(self._login_controller.initialize_user_login)
     self._button_proceed.grid(row=4, column=0, pady=10, padx=0)
     
     self.grid_columnconfigure(0, weight=1)
@@ -54,6 +56,12 @@ class LoginForm(ctk.CTkFrame):
     self._entry_password.enable()
     self._link_register.enable()
     self._button_proceed.configure(state='normal')
+    
+  def start_loading(self) -> None:
+    self._button_proceed.start_loading_display()
+    
+  def stop_loading(self) -> None:
+    self._button_proceed.stop_loading_display()
     
   def messagebox(self, title, message, option1, option2=None):
     return self._master.messagebox(title, message, option1, option2)
