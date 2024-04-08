@@ -47,8 +47,6 @@ class LoginForm(ctk.CTkFrame):
     self.set_user_note('')
     self.set_password_note('')
     
-    self.focus_user_entry()
-    
   def disable(self) -> None:
     self._entry_user.disable()
     self._entry_password.disable()

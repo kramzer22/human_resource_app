@@ -36,7 +36,7 @@ class Auth(ctk.CTkToplevel):
     self.switch_to_login_form()
     
     # initialized handlers goes here
-    self.protocol("WM_DELETE_WINDOW", lambda: self.on_closing(True))
+
     
   def disable_frames(self):
     self._registration_form.disable()
@@ -62,8 +62,6 @@ class Auth(ctk.CTkToplevel):
     self.remove_frames()
     self.display_login_frame()
     self.resize_app(self._auth_cotroller.get_login_formsize())
-    self._login_form.focus_set()
-    self._login_form.focus_user_entry()
     
   def display_registration_frame(self):
     self.title('(SA)Simple Applicant - Registration')
@@ -103,9 +101,12 @@ class Auth(ctk.CTkToplevel):
   def on_closing(self, destroy_app) -> None:
     self.close(destroy_app)
     
-  def close(self, destroy_app):
+  def destroy(self, destroy_app:bool=True) -> None:
     if destroy_app:
+      super().destroy()
       self._master.destroy()
+    else:
+      super().destroy()
     
   def hide_window(self):
     self.withdraw()

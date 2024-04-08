@@ -63,10 +63,10 @@ class App(ctk.CTk):
       self._auth.center_on_screen()
       
   def destroy_auth_window(self):
-    if self._auth or self._auth.winfo_exists():
-      self._auth.close(False)
+      self._auth.destroy(destroy_app=False)
   
   def show(self):
+    self.destroy_auth_window()
     self.deiconify()
     
   def login(self):
