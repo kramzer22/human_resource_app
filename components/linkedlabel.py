@@ -1,10 +1,12 @@
+from typing import Any, Tuple
 import customtkinter as ctk
 
 
 class LinkedLabel(ctk.CTkLabel):
   
-  def __init__(self, master:any, text:str, anchor:str='', font_family:str='Calibri', font_size:int=14):
-    super().__init__(master=master, text=text, font=(font_family, font_size), anchor=anchor)
+  def __init__(self, master: Any, **kwargs):
+    super().__init__(master, **kwargs)
+    
     self._default_text_color = self._text_color
     
     self._state: str ='normal'

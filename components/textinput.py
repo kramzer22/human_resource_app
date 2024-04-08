@@ -1,10 +1,13 @@
+import tkinter
+from tkinter.constants import NORMAL
+from typing import Any, Tuple
 import customtkinter as ctk
 
 class TextInput(ctk.CTkFrame):
-  def __init__(self, master:any, name:str='', label:str='', text:str='', placeholder_text:str='', font_family:str='Calibri', font_size:int=14, entry_height:int=40, require=False):
-    super().__init__(master=master, fg_color='transparent')
+  def __init__(self, master: Any, font: tuple | ctk.CTkFont | None = None, entry_height:int=40,entry_text:str='', entry_placeholder_text:str = '', label_text:str='', name_tag:str='', input_require=False, **kwargs):
+    super().__init__(master, **kwargs)
     
-    self._name: str = name
+    self._name_tag:str = name_tag
     self._key_release_handler: callable = None
     # self.text = text
     
@@ -12,16 +15,16 @@ class TextInput(ctk.CTkFrame):
     
     self._show_button: ctk.CTkButton = None 
     
-    self._label: ctk.CTkLabel = ctk.CTkLabel(master=self, text=label, font=(font_family, font_size), anchor='sw')
+    self._label = ctk.CTkLabel(master=self, text=label_text, font=font, anchor='sw')
     self._label.grid(row=0, column=0, pady=(0,10), padx=0, sticky='we')
     
-    self._require: ctk.CTkLabel = ctk.CTkLabel(master=self, text='*' if require else '', text_color='red', font=(font_family, font_size), anchor='sw')
+    self._require = ctk.CTkLabel(master=self, text='*' if input_require else '', text_color='red', font=font, anchor='sw')
     self._require.grid(row=0, column=1, pady=(0,10), padx=0, sticky='we')
   
-    self._note: ctk.CTkLabel = ctk.CTkLabel(master=self, text='', font=(font_family, font_size), text_color='red', anchor='se')
+    self._note = ctk.CTkLabel(master=self, text='', text_color='red', font=font, anchor='se')
     self._note.grid(row=0, column=2, pady=(0,10), padx=0, sticky='we')
     
-    self._entry: ctk.CTkEntry = ctk.CTkEntry(master=self, font=(font_family, font_size), height=entry_height, placeholder_text=placeholder_text) 
+    self._entry = ctk.CTkEntry(master=self, height=entry_height, font=font,placeholder_text=entry_placeholder_text) 
     self._entry.grid(row=1, column=0, columnspan=3, pady=0, padx=0, sticky='we')
     self._entry.bind("<KeyRelease>", lambda event: self.on_entry_key_release(event))
   
@@ -55,7 +58,7 @@ class TextInput(ctk.CTkFrame):
     self._note.configure(text=text)
     
   def focus(self) -> None:
-    self._entry.focus()
+    self._entry.focus_set()
     
   def enable(self) -> None:
     self._entry.configure(state='normal')
@@ -72,6 +75,14 @@ class TextInput(ctk.CTkFrame):
     return self._entry.get()
   
   @text.setter
-  def text(self, text: str) -> None:
+  def text(self, text:str) -> None:
     self._entry.delete(0, 'end') 
     self._entry.insert('end', text)
+    
+  @property
+  def name(self) -> str:
+    return self._name_tag
+  
+  @name.setter
+  def name(self, value:str):
+    self._name_tag = value

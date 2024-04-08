@@ -6,8 +6,9 @@ from components.textinput import TextInput
 from components.combobox import ComboBox
 from components.datebox import DateSelector
 from components.fileselector import FileSelector
-
 from components.taskbar import TaskBar
+
+from module.fonts import *
 
 class ApplicationForm(ctk.CTkFrame):
   def __init__(self, master):
@@ -34,13 +35,13 @@ class ApplicationForm(ctk.CTkFrame):
     self._header = ctk.CTkLabel(master=self._form_frame, text="Applicant registration form", font=('Calibri', 24), anchor='w')
     self._header.grid(row=0, column=0, columnspan=3, pady=10, padx=10, sticky='we')
     
-    self._entry_firstname = TextInput(master=self._form_frame, label='First name')
+    self._entry_firstname = TextInput(master=self._form_frame, label_text='First name', input_require=True, font=(FORM_FONT_FAMILY, FORM_FONT_SIZE))
     self._entry_firstname.grid(row=1, column=0, pady=10, padx=10, sticky='we')
     
-    self._entry_middlename = TextInput(master=self._form_frame, label='Middle name')
+    self._entry_middlename = TextInput(master=self._form_frame, label_text='Middle name', font=(FORM_FONT_FAMILY, FORM_FONT_SIZE))
     self._entry_middlename.grid(row=1, column=1, pady=10, padx=10, sticky='we')
     
-    self._entry_lastname = TextInput(master=self._form_frame, label='Last name')
+    self._entry_lastname = TextInput(master=self._form_frame, label_text='Last name', input_require=True, font=(FORM_FONT_FAMILY, FORM_FONT_SIZE))
     self._entry_lastname.grid(row=1, column=2, pady=10, padx=10, sticky='we')
     
     self.__datebox_bday = DateSelector(master=self._form_frame, label='Birthdate')
@@ -49,25 +50,25 @@ class ApplicationForm(ctk.CTkFrame):
     self._combo_gender = ComboBox(master=self._form_frame, values=self._applicant_controller.get_genders(), label='Gender')
     self._combo_gender.grid(row=2, column=1, pady=10, padx=10, sticky='we')
     
-    self.__entry_contact = TextInput(master=self._form_frame, label='Contact number')
+    self.__entry_contact = TextInput(master=self._form_frame, label_text='Contact number', font=(FORM_FONT_FAMILY, FORM_FONT_SIZE))
     self.__entry_contact.grid(row=2, column=2, pady=10, padx=10, sticky='we')
     
-    self.__country = TextInput(master=self._form_frame, label='Country')
+    self.__country = TextInput(master=self._form_frame, label_text='Country', font=(FORM_FONT_FAMILY, FORM_FONT_SIZE))
     self.__country.grid(row=3, column=0, pady=10, padx=10, sticky='we')
     
-    self.__province = TextInput(master=self._form_frame, label='Province')
+    self.__province = TextInput(master=self._form_frame, label_text='Province/State', font=(FORM_FONT_FAMILY, FORM_FONT_SIZE))
     self.__province.grid(row=3, column=1, pady=10, padx=10, sticky='we')
     
-    self.__city = TextInput(master=self._form_frame, label='City')
+    self.__city = TextInput(master=self._form_frame, label_text='City', font=(FORM_FONT_FAMILY, FORM_FONT_SIZE))
     self.__city.grid(row=3, column=2, pady=10, padx=10, sticky='we')
     
-    self.__address = TextInput(master=self._form_frame, label='Address')
+    self.__address = TextInput(master=self._form_frame, label_text='Address', font=(FORM_FONT_FAMILY, FORM_FONT_SIZE))
     self.__address.grid(row=4, column=0, columnspan=3, pady=10, padx=10, sticky='we')
     
-    self.__position = TextInput(master=self._form_frame, label='Position')
+    self.__position = TextInput(master=self._form_frame, label_text='Applying position', input_require=True, font=(FORM_FONT_FAMILY, FORM_FONT_SIZE))
     self.__position.grid(row=5, column=0, columnspan=2, pady=10, padx=10, sticky='we')
     
-    self.__source = TextInput(master=self._form_frame, label='Source')
+    self.__source = TextInput(master=self._form_frame, label_text='Source', font=(FORM_FONT_FAMILY, FORM_FONT_SIZE))
     self.__source.grid(row=5, column=2, pady=10, padx=10, sticky='we')
     
     self.__resume = FileSelector(master=self._form_frame, label='Resume')

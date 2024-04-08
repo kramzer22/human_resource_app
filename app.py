@@ -60,6 +60,7 @@ class App(ctk.CTk):
   def show_auth_window(self):
     if self._auth is None or not self._auth.winfo_exists():
       self._auth = Auth(self)
+      self._auth.center_on_screen()
       
   def destroy_auth_window(self):
     if self._auth or self._auth.winfo_exists():

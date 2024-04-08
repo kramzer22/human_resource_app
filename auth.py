@@ -62,6 +62,8 @@ class Auth(ctk.CTkToplevel):
     self.remove_frames()
     self.display_login_frame()
     self.resize_app(self._auth_cotroller.get_login_formsize())
+    self._login_form.focus_set()
+    self._login_form.focus_user_entry()
     
   def display_registration_frame(self):
     self.title('(SA)Simple Applicant - Registration')
@@ -84,6 +86,16 @@ class Auth(ctk.CTkToplevel):
     
   def resize_app(self, size) -> None:
     self.geometry(f'{size['width']}x{size['height']}')
+    
+  def center_on_screen(self):
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+
+        x = (screen_width - self.winfo_reqwidth()) // 2
+        y = (screen_height - self.winfo_reqheight()) // 2
+
+        # Set the position of the window
+        self.geometry(f"+{x}+{y}")
     
   def login(self):
     self._master.login()

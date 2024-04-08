@@ -5,11 +5,11 @@ import threading
 import time
 
 class LoadingButton(ctk.CTkButton):
-  def __init__(self, master: Any, width: int = 140, height: int = 28, corner_radius: int | None = None, border_width: int | None = None, border_spacing: int = 2, bg_color: str | Tuple[str, str] = "transparent", fg_color: str | Tuple[str, str] | None = None, hover_color: str | Tuple[str, str] | None = None, border_color: str | Tuple[str, str] | None = None, text_color: str | Tuple[str, str] | None = None, text_color_disabled: str | Tuple[str, str] | None = None, background_corner_colors: Tuple[str | Tuple[str, str]] | None = None, round_width_to_even_numbers: bool = True, round_height_to_even_numbers: bool = True, text: str = "CTkButton", font: tuple | ctk.CTkFont | None = None, textvariable: ctk.Variable | None = None, image: ctk.CTkImage | Any | None = None, state: str = "normal", hover: bool = True, command: Callable[[], Any] | None = None, compound: str = "left", anchor: str = "center", **kwargs):
-    super().__init__(master, width, height, corner_radius, border_width, border_spacing, bg_color, fg_color, hover_color, border_color, text_color, text_color_disabled, background_corner_colors, round_width_to_even_numbers, round_height_to_even_numbers, text, font, textvariable, image, state, hover, command, compound, anchor, **kwargs)
+  def __init__(self, master: Any, **kwargs):
+    super().__init__(master, **kwargs)
     
     self._button_1_handler = None
-    self._button_text = text
+    self._button_text = kwargs.get('text')
     self._is_loading = False
     
     self.bind('<Button-1>', lambda event: self.on_click(event))

@@ -6,6 +6,8 @@ from components.loadingbutton import LoadingButton
 
 from controller.login_controller import LoginController
 
+from module.fonts import *
+
 class LoginForm(ctk.CTkFrame):
   
   def __init__(self, master, pady=0, padx=0):
@@ -15,23 +17,23 @@ class LoginForm(ctk.CTkFrame):
     super().__init__(master=master)
     self._NAME = 'LOGIN_FORM'
     
-    self._label_header = ctk.CTkLabel(master=self, text="Login", font=('Calibri', 24), anchor='w')
+    self._label_header = ctk.CTkLabel(master=self, text="Login", font=('Calibri', 24), fg_color='transparent', anchor='w')
     self._label_header.grid(row=0, column=0, pady=10, padx=padx, sticky='we')
     
-    self._entry_user = TextInput(master=self, label='User account')
+    self._entry_user = TextInput(master=self, label_text='User account', font=(FORM_FONT_FAMILY, FORM_FONT_SIZE), fg_color='transparent')
     self._entry_user.grid(row=1, column=0, pady=10, padx=padx, sticky='we')
     self._entry_user.attach_handler_to_keypress_event(handler=self._login_controller.set_user_handler)
     
-    self._entry_password = TextInput(master=self, label='Password')
+    self._entry_password = TextInput(master=self, label_text='Password', font=(FORM_FONT_FAMILY, FORM_FONT_SIZE), fg_color='transparent')
     self._entry_password.grid(row=2, column=0, pady=10, padx=padx, sticky='we')
     self._entry_password.attach_handler_to_keypress_event(handler=self._login_controller.set_password_handler)
     self._entry_password.enable_entry_mask()
     
-    self._link_register = LinkedLabel(master=self, text="Not yet a member? Click here to register", anchor='e')
+    self._link_register = LinkedLabel(master=self, text="Not yet a member? Click here to register", font=(FORM_FONT_FAMILY, FORM_LINK_FONT_SIZE), anchor='e')
     self._link_register.grid(row=3, column=0, pady=10, padx=padx, sticky='e')
     self._link_register.attach_handler_to_click_event(handler=self._master.switch_to_registration_form)
     
-    self._button_proceed = LoadingButton(master=self, text='Proceed', font=('Calibri', 16), width=80, height=40)
+    self._button_proceed = LoadingButton(master=self, text='Login', font=(FORM_FONT_FAMILY, FORM_FONT_SIZE), width=80, height=40)
     self._button_proceed.attach_handler_to_click_event(self._login_controller.initialize_user_login)
     self._button_proceed.grid(row=4, column=0, pady=10, padx=0)
     
@@ -44,6 +46,8 @@ class LoginForm(ctk.CTkFrame):
     
     self.set_user_note('')
     self.set_password_note('')
+    
+    self.focus_user_entry()
     
   def disable(self) -> None:
     self._entry_user.disable()
@@ -68,6 +72,10 @@ class LoginForm(ctk.CTkFrame):
   
   def login(self):
     self._master.login()
+    
+  def focus_user_entry(self) -> None:
+    print('focus on user entry')
+    self._entry_user.focus()
     
   @property
   def user(self):
