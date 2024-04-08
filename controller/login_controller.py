@@ -28,7 +28,7 @@ class LoginController:
     
   def set_password_handler(self, event):
     if event.keysym == 'Return':
-      self.login_user_handler()
+      self.initialize_user_login()
     else:
       self._user_login.password = self._login_view.password
       
