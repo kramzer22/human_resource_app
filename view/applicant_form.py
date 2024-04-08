@@ -1,5 +1,7 @@
 import customtkinter as ctk
 
+from controller.applicant_controller import ApplicantController
+
 from components.textinput import TextInput
 from components.combobox import ComboBox
 from components.datebox import DateSelector
@@ -9,71 +11,72 @@ from components.taskbar import TaskBar
 
 class ApplicationForm(ctk.CTkFrame):
   def __init__(self, master):
-    super().__init__(master=master, fg_color='transparent')
+    self._master: any = master 
+    self._applicant_controller = ApplicantController(view=self)
     
-    gender = ['male', 'female', 'others']
-    
-    self.__form_frame = ctk.CTkFrame(master=self)
-    self.__form_frame.grid(row=0, column=0, pady=0, padx=(0, 2), sticky='nswe')
-    
-    self.__task_frame = TaskBar(master=self, title='Applicant progress')
-    self.__task_frame.grid(row=0, column=1, pady=0, padx=0, sticky='nswe')
+    super().__init__(master=self._master, fg_color='transparent')
     
     self.grid_columnconfigure(0, weight=1)
     self.grid_columnconfigure(1, minsize=340)
     self.grid_rowconfigure(0, weight=1)
     
-    self.__header = ctk.CTkLabel(master=self.__form_frame, text="Applicant registration form", font=('Calibri', 24), anchor='w')
-    self.__header.grid(row=0, column=0, columnspan=3, pady=10, padx=10, sticky='we')
+    self._form_frame = ctk.CTkFrame(master=self)
+    self._form_frame.grid(row=0, column=0, pady=0, padx=(0, 2), sticky='nswe')
     
-    self.__entry_firstname = TextInput(master=self.__form_frame, label='First name')
-    self.__entry_firstname.grid(row=1, column=0, pady=10, padx=10, sticky='we')
+    self._form_frame.grid_columnconfigure(0, weight=1, uniform='layout_1')
+    self._form_frame.grid_columnconfigure(1, weight=1, uniform='layout_1')
+    self._form_frame.grid_columnconfigure(2, weight=1, uniform='layout_1')
+    self._form_frame.grid_rowconfigure(7, weight=1)
     
-    self.__entry_middlename = TextInput(master=self.__form_frame, label='Middle name')
-    self.__entry_middlename.grid(row=1, column=1, pady=10, padx=10, sticky='we')
+    self.__task_frame = TaskBar(master=self, title='Applicant progress')
+    self.__task_frame.grid(row=0, column=1, pady=0, padx=0, sticky='nswe')
     
-    self.__entry_lastname = TextInput(master=self.__form_frame, label='Last name')
-    self.__entry_lastname.grid(row=1, column=2, pady=10, padx=10, sticky='we')
+    self._header = ctk.CTkLabel(master=self._form_frame, text="Applicant registration form", font=('Calibri', 24), anchor='w')
+    self._header.grid(row=0, column=0, columnspan=3, pady=10, padx=10, sticky='we')
     
-    self.__datebox_bday = DateSelector(master=self.__form_frame, label='Birthdate')
+    self._entry_firstname = TextInput(master=self._form_frame, label='First name')
+    self._entry_firstname.grid(row=1, column=0, pady=10, padx=10, sticky='we')
+    
+    self._entry_middlename = TextInput(master=self._form_frame, label='Middle name')
+    self._entry_middlename.grid(row=1, column=1, pady=10, padx=10, sticky='we')
+    
+    self._entry_lastname = TextInput(master=self._form_frame, label='Last name')
+    self._entry_lastname.grid(row=1, column=2, pady=10, padx=10, sticky='we')
+    
+    self.__datebox_bday = DateSelector(master=self._form_frame, label='Birthdate')
     self.__datebox_bday.grid(row=2, column=0, pady=10, padx=10, sticky='we')
     
-    self.__combo_gender = ComboBox(master=self.__form_frame, values=gender, label='Gender')
-    self.__combo_gender.grid(row=2, column=1, pady=10, padx=10, sticky='we')
+    self._combo_gender = ComboBox(master=self._form_frame, values=self._applicant_controller.get_genders(), label='Gender')
+    self._combo_gender.grid(row=2, column=1, pady=10, padx=10, sticky='we')
     
-    self.__entry_contact = TextInput(master=self.__form_frame, label='Contact number')
+    self.__entry_contact = TextInput(master=self._form_frame, label='Contact number')
     self.__entry_contact.grid(row=2, column=2, pady=10, padx=10, sticky='we')
     
-    self.__country = TextInput(master=self.__form_frame, label='Country')
+    self.__country = TextInput(master=self._form_frame, label='Country')
     self.__country.grid(row=3, column=0, pady=10, padx=10, sticky='we')
     
-    self.__province = TextInput(master=self.__form_frame, label='Province')
+    self.__province = TextInput(master=self._form_frame, label='Province')
     self.__province.grid(row=3, column=1, pady=10, padx=10, sticky='we')
     
-    self.__city = TextInput(master=self.__form_frame, label='City')
+    self.__city = TextInput(master=self._form_frame, label='City')
     self.__city.grid(row=3, column=2, pady=10, padx=10, sticky='we')
     
-    self.__address = TextInput(master=self.__form_frame, label='Address')
+    self.__address = TextInput(master=self._form_frame, label='Address')
     self.__address.grid(row=4, column=0, columnspan=3, pady=10, padx=10, sticky='we')
     
-    self.__position = TextInput(master=self.__form_frame, label='Position')
+    self.__position = TextInput(master=self._form_frame, label='Position')
     self.__position.grid(row=5, column=0, columnspan=2, pady=10, padx=10, sticky='we')
     
-    self.__source = TextInput(master=self.__form_frame, label='Source')
+    self.__source = TextInput(master=self._form_frame, label='Source')
     self.__source.grid(row=5, column=2, pady=10, padx=10, sticky='we')
     
-    self.__resume = FileSelector(master=self.__form_frame, label='Resume')
+    self.__resume = FileSelector(master=self._form_frame, label='Resume')
     self.__resume.grid(row=6, column=0, columnspan=3, pady=10, padx=10, sticky='we')
     
-    self.__save = ctk.CTkButton(master=self.__form_frame, text='Save', font=('Calibri', 22), width=140, height=60, command=self.click)
+    self.__save = ctk.CTkButton(master=self._form_frame, text='Save', font=('Calibri', 22), width=140, height=60, command=self.click)
     self.__save.grid(row=7, column=0, columnspan=3, pady=0, padx=0)
     
     self.__command = None
-      
-    self.__form_frame.grid_columnconfigure(0, weight=1, uniform='layout_1')
-    self.__form_frame.grid_columnconfigure(1, weight=1, uniform='layout_1')
-    self.__form_frame.grid_columnconfigure(2, weight=1, uniform='layout_1')
-    self.__form_frame.grid_rowconfigure(7, weight=1)
     
     self.enable_form()
     
@@ -94,21 +97,23 @@ class ApplicationForm(ctk.CTkFrame):
     return applicant
     
   
-  def disable_form(self):
-    for item in self.__form_frame.winfo_children():
-      if isinstance(item, ctk.CTkFrame):
-        for component in item.winfo_children():
-          component.configure(state='disable')
-      else:
-        item.configure(state='disable')
+  def disable_form(self) -> None:
+    pass
+    # for item in self.__form_frame.winfo_children():
+    #   if isinstance(item, ctk.CTkFrame):
+    #     for component in item.winfo_children():
+    #       component.configure(state='disable')
+    #   else:
+    #     item.configure(state='disable')
         
-  def enable_form(self):
-    for item in self.__form_frame.winfo_children():
-      if isinstance(item, ctk.CTkFrame):
-        for component in item.winfo_children():
-          component.configure(state='normal')
-      else:
-        item.configure(state='normal')
+  def enable_form(self) -> None:
+    pass
+    # for item in self.__form_frame.winfo_children():
+    #   if isinstance(item, ctk.CTkFrame):
+    #     for component in item.winfo_children():
+    #       component.configure(state='normal')
+    #   else:
+    #     item.configure(state='normal')
         
   def set_save_command(self, command):
     self.__command = command

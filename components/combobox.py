@@ -1,7 +1,7 @@
 import customtkinter as ctk
 
 class ComboBox(ctk.CTkFrame):
-  def __init__(self, master, label='', values=[], font_family='Calibri', font_size=14):
+  def __init__(self, master:any, label:str='', values:list=[], font_family='Calibri', font_size=14):
     super().__init__(master=master, fg_color='transparent')
     
     self.__label = ctk.CTkLabel(master=self, text=label, font=(font_family, font_size), anchor='sw')

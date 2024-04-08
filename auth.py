@@ -1,3 +1,5 @@
+import customtkinter as ctk
+
 from CTkMessagebox import CTkMessagebox
 
 from helpers.services import Services
@@ -9,35 +11,32 @@ from view.registration_form import RegistrationForm
 from components.notification import Notification
 
 from controller.auth_controller import AuthController
-class Auth:
-  
-  def __init__(self, ctk, master):   
+class Auth(ctk.CTkToplevel):
+  def __init__(self, master):
     self._master = master
-    self._services = Services()
-    
     self._auth_cotroller = AuthController(self)
-    # self._display = DisplayFunctions()
     
-    self._root = ctk.CTk()
+    super().__init__(master)   
+    self._services = Services()
+    # self._display = DisplayFunctions()
     
     # self.__x_pos, self.__y_pos = self.__display.centerposition(self.__app_width, self.__app_height, self.__root)
     
-    self._root.title('(SA)Simple Applicant - Login')
-    self._root.resizable(width=False, height=False)
+    self.title('(SA)Simple Applicant - Login')
+    self.resizable(width=False, height=False)
     
-    self._login_form = LoginForm(master=self._root, parent=self, padx=30) 
+    self.grid_columnconfigure(0, weight=1)
+    self.grid_rowconfigure(0, weight=1)
+    
+    self._login_form = LoginForm(master=self, padx=30) 
     # self.__loginform.grid(row=0, column=0, padx=0, pady=0, sticky='nswe')
     
-    self._registration_form = RegistrationForm(master=self._root, parent=self, padx=30)
-    
-    self._root.grid_columnconfigure(0, weight=1)
-    self._root.grid_rowconfigure(0, weight=1)
+    self._registration_form = RegistrationForm(master=self, padx=30)
     
     self.switch_to_login_form()
     
-  def run(self):
-    # self.__root.geometry(f'+{self.__x_pos}+{self.__y_pos}')
-    self._root.mainloop()
+    # initialized handlers goes here
+    self.protocol("WM_DELETE_WINDOW", lambda: self.on_closing(True))
     
   def disable_frames(self):
     self._registration_form.disable()
@@ -48,24 +47,24 @@ class Auth:
   def messagebox(self, title, message, option1, option2=None, icon=None):
     msg = None
     if not option2:
-      msg = CTkMessagebox(master=self._root, title=title, message=message, icon=icon, option_1=option1, button_height=40, button_width=80, topmost=False)
+      msg = CTkMessagebox(master=self, title=title, message=message, icon=icon, option_1=option1, button_height=40, button_width=80, topmost=False)
     else:
-      msg = CTkMessagebox(master=self._root, title=title, icon=icon, message=message, option_1=option1, option_2=option2, button_height=40, button_width=80, topmost=False)    
+      msg = CTkMessagebox(master=self, title=title, icon=icon, message=message, option_1=option1, option_2=option2, button_height=40, button_width=80, topmost=False)    
     return msg.get()
     
   def switch_to_registration_form(self):
     self.clear_registration_form()
     self.remove_frames()
     self.display_registration_frame()
-    self.resize_frame(self._auth_cotroller.get_registration_formsize())
+    self.resize_app(self._auth_cotroller.get_registration_formsize())
     
   def switch_to_login_form(self):
     self.remove_frames()
     self.display_login_frame()
-    self.resize_frame(self._auth_cotroller.get_login_formsize())
+    self.resize_app(self._auth_cotroller.get_login_formsize())
     
   def display_registration_frame(self):
-    self._root.title('(SA)Simple Applicant - Registration')
+    self.title('(SA)Simple Applicant - Registration')
     self._registration_form.grid(row=0, column=0, padx=0, pady=0, sticky='nswe')
     
   def clear_registration_form(self):
@@ -73,7 +72,7 @@ class Auth:
     self._registration_form.clear_form()
     
   def display_login_frame(self):
-    self._root.title('(SA)Simple Applicant - Login')
+    self.title('(SA)Simple Applicant - Login')
     self._login_form.grid(row=0, column=0, padx=0, pady=0, sticky='nswe')
   
   # Remove frame in use on auth window
@@ -83,21 +82,21 @@ class Auth:
       if self._login_form.grid_info() != {}:
         self._login_form.grid_forget()  
     
-  def resize_frame(self, size) -> None:
-    self._root.geometry(f'{size['width']}x{size['height']}')
+  def resize_app(self, size) -> None:
+    self.geometry(f'{size['width']}x{size['height']}')
     
-  def on_login(self):
-    self._master.open_app()
+  def login(self):
+    self._master.login()
     
-  def close(self):
-    try:
-        if self._root.winfo_exists():
-            self._root.destroy()
-    except Exception as e:
-        print(f"Error closing window: {e}")
+  def on_closing(self, destroy_app) -> None:
+    self.close(destroy_app)
+    
+  def close(self, destroy_app):
+    if destroy_app:
+      self._master.destroy()
     
   def hide_window(self):
-    self._root.withdraw()
+    self.withdraw()
     
     
   
