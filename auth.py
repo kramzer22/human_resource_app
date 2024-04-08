@@ -47,9 +47,9 @@ class Auth(ctk.CTkToplevel):
   def messagebox(self, title, message, option1, option2=None, icon=None):
     msg = None
     if not option2:
-      msg = CTkMessagebox(master=self, title=title, message=message, icon=icon, option_1=option1, button_height=40, button_width=80, topmost=False)
+      msg = CTkMessagebox(master=self, title=title, message=message, icon=icon, option_1=option1, button_height=40, button_width=80)
     else:
-      msg = CTkMessagebox(master=self, title=title, icon=icon, message=message, option_1=option1, option_2=option2, button_height=40, button_width=80, topmost=False)    
+      msg = CTkMessagebox(master=self, title=title, icon=icon, message=message, option_1=option1, option_2=option2, button_height=40, button_width=80)    
     return msg.get()
     
   def switch_to_registration_form(self):

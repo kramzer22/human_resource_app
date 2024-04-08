@@ -2,7 +2,6 @@ import requests as req
 import dotenv
 import os
 import threading
-import time
 
 from helpers.pinger import Pinger
 
@@ -26,20 +25,21 @@ class LoginServices:
       
   def initialize_user_login(self, user_data:any, method:callable):
     self._res = None
-    
+    response = None
     data = {
         'username': user_data.username,
         'password': user_data.password,
       }
     print(data)
     
-    if Pinger.test_server_response():
-      try:
-        self._res = req.post(f'{self._URL}/api/user/login', data=data)  
-      except Exception as e:
-        self._res = None
-  
-    self.user_login_result(method)  
+    # if Pinger.test_server_response():
+    try:
+      self._res = req.post(f'{self._URL}/api/user/login', data=data)        
+     
+    except Exception as e:
+      self._res = None
+    finally:
+      self.user_login_result(method)  
     
   def user_login_result(self, method:callable):
     if self._res.status_code == 500:

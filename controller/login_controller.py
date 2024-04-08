@@ -40,7 +40,7 @@ class LoginController:
     print(self._user_login.flags())
     self._login_view.disable()
     if logincheck.check_login_flags(self._user_login.flags()):    
-      self._login_services.initialize_user_login(self._user_login, self.user_login) 
+      self._login_services.user_login(self._user_login, self.user_login) 
     else:
       self._login_view.enable()
       
