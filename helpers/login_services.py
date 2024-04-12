@@ -47,7 +47,8 @@ class LoginServices:
         print('Internal server problem', self._res)
         method( False, { 'field': 'username', 'message': 'Internal server problem'})
       elif self._res.status_code == 200:
-        method(True, None)
+        res_data = self._res.json()
+        method(True, {'username': res_data['username'], 'accesstoken': res_data['accessToken']})
       elif self._res.status_code == 400:
         error_data = self._res.json()
         method(False, error_data)

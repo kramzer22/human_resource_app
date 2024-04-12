@@ -44,18 +44,18 @@ class LoginController:
        
       self._login_services.user_login(self._user_login, self.user_login) 
       
-  def user_login(self, result:bool, error_data:tuple|None) -> None:
+  def user_login(self, result:bool, data_result:tuple|None) -> None:
     self._login_view.enable()
     self._login_view.stop_loading()
     
     if result == False:
-      if (error_data['field'] == 'username'):
-        self._login_view.set_user_note(error_data['message'])          
+      if (data_result['field'] == 'username'):
+        self._login_view.set_user_note(data_result['message'])          
     else:
       self._user_login.clear() 
       self._login_view.clear_form()
       
-      msg_result = self._login_view.messagebox('Login successful', 'welcome!', 'Proceed')    
+      msg_result = self._login_view.messagebox('Login successful', f'Welcome, {data_result['username']}.', 'Proceed')    
       if msg_result == 'Proceed':
         self._login_view.login()
     
