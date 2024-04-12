@@ -34,7 +34,7 @@ class LoginServices:
     
     # if Pinger.test_server_response():
     try:
-      self._res = req.post(f'{self._URL}/api/user/login', data=data)        
+      self._res = req.post(f'{self._URL}/login', data=data)        
      
     except Exception as e:
       self._res = None
@@ -42,18 +42,19 @@ class LoginServices:
       self.user_login_result(method)  
     
   def user_login_result(self, method:callable):
-    if self._res.status_code == 500:
-      print('Internal server problem', self._res)
-      method( False, { 'field': 'username', 'message': 'Internal server problem'})
-    elif self._res.status_code == 200:
-      method(True, None)
-    elif self._res.status_code == 400:
-      error_data = self._res.json()
-      method(False, error_data)
-    elif self._res.status_code == 401 or self._res.status_code == 404:
-      error_data = self._res.json()
-      print(error_data)
-      method(False, error_data)
+    if hasattr(self._res, 'status_code'):
+      if self._res.status_code == 500:
+        print('Internal server problem', self._res)
+        method( False, { 'field': 'username', 'message': 'Internal server problem'})
+      elif self._res.status_code == 200:
+        method(True, None)
+      elif self._res.status_code == 400:
+        error_data = self._res.json()
+        method(False, error_data)
+      elif self._res.status_code == 401 or self._res.status_code == 404:
+        error_data = self._res.json()
+        print(error_data)
+        method(False, error_data)
     else:
       method( False, { 'field': 'username', 'message': 'Unable to connect to server'})
 
