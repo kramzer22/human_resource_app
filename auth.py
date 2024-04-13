@@ -111,6 +111,9 @@ class Auth(ctk.CTkToplevel):
   def hide_window(self):
     self.withdraw()
     
+  def show_window(self):
+    self.deiconify()
+    
     
   
     

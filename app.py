@@ -57,16 +57,21 @@ class App(ctk.CTk):
   def hide(self):
     self.withdraw()
     
-  def show_auth_window(self):
+  def open_auth_window(self):
     if self._auth is None or not self._auth.winfo_exists():
       self._auth = Auth(self)
       self._auth.center_on_screen()
+    else:
+      self.show_auth_window()
       
-  def destroy_auth_window(self):
-      self._auth.destroy(destroy_app=False)
+  def show_auth_window(self):
+    self._auth.show_window()
+      
+  def hide_auth_window(self):
+      self._auth.hide_window()
   
   def show(self):
-    self.destroy_auth_window()
+    self.hide_auth_window()
     self.deiconify()
     
   def login(self):
@@ -89,4 +94,5 @@ class App(ctk.CTk):
     
   def on_closing(self) -> None:
     print('closing app...')
+    self._auth.destroy(False)
     self.destroy()

@@ -5,11 +5,12 @@ import threading
 
 from helpers.pinger import Pinger
 
-dotenv.load_dotenv()
+from module.main_config import MainConfig as mainconfig
+import module.data_settings as data_settings
 
 class LoginServices:
   def __init__(self) -> None: 
-    self._URL = os.getenv('SERVER_URL')
+    self._URL = data_settings.get_server_url()
     self._res = None
 
   def test_connection(self) -> None:
@@ -26,6 +27,9 @@ class LoginServices:
   def initialize_user_login(self, user_data:any, method:callable):
     self._res = None
     response = None
+    
+    print(mainconfig.get_machine_id())
+    
     data = {
         'username': user_data.username,
         'password': user_data.password,
@@ -48,6 +52,9 @@ class LoginServices:
         method( False, { 'field': 'username', 'message': 'Internal server problem'})
       elif self._res.status_code == 200:
         res_data = self._res.json()
+        
+        data_settings.set_access_token(res_data['accessToken'])
+        
         method(True, {'username': res_data['username'], 'accesstoken': res_data['accessToken']})
       elif self._res.status_code == 400:
         error_data = self._res.json()
