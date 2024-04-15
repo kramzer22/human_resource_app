@@ -1,10 +1,9 @@
 import customtkinter as ctk
 import datetime as dt
-import json
 
 class DateSelector(ctk.CTkFrame):
-  def __init__(self, master, label='', date_value: dt.date='', font_family='Calibri', font_size=14, entry_height=40):
-    super().__init__(master=master, fg_color='transparent')
+  def __init__(self, master, font: tuple | ctk.CTkFont | None = None, label='', date_value: dt.date='', entry_height=40, **kwargs):
+    super().__init__(master=master, **kwargs)
     
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov', 'Dec']
     
@@ -21,16 +20,16 @@ class DateSelector(ctk.CTkFrame):
     
     # print(years)
     
-    self.__label = ctk.CTkLabel(master=self, text=label, font=(font_family, font_size), anchor='sw')
+    self.__label = ctk.CTkLabel(master=self, text=label, font=font, anchor='sw')
     self.__label.grid(row=0, column=0, columnspan=3, pady=(0,10), padx=0, sticky='we')
     
-    self.__combo_month = ctk.CTkComboBox(master=self,  values=months, font=(font_family, font_size), height=entry_height)
+    self.__combo_month = ctk.CTkComboBox(master=self,  values=months, font=font, height=entry_height)
     self.__combo_month.grid(row=1, column=0, pady=0, padx=(0,10), sticky='we')
     
-    self.__combo_day = ctk.CTkComboBox(master=self, values=days, font=(font_family, font_size), height=entry_height)
+    self.__combo_day = ctk.CTkComboBox(master=self, values=days, font=font, height=entry_height)
     self.__combo_day.grid(row=1, column=1, pady=0, padx=(0,10), sticky='we')
     
-    self.__combo_year = ctk.CTkComboBox(master=self, values=years, font=(font_family, font_size), height=entry_height)
+    self.__combo_year = ctk.CTkComboBox(master=self, values=years, font=font, height=entry_height)
     self.__combo_year.grid(row=1, column=2, pady=0, padx=0, sticky='we')
     
     self.grid_columnconfigure(0, weight=1)

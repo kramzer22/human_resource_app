@@ -4,7 +4,7 @@ from typing import Any, Tuple
 import customtkinter as ctk
 
 class TextInput(ctk.CTkFrame):
-  def __init__(self, master: Any, font: tuple | ctk.CTkFont | None = None, entry_height:int=40,entry_text:str='', entry_placeholder_text:str = '', label_text:str='', name_tag:str='', input_require=False, **kwargs):
+  def __init__(self, master: Any, font: tuple | ctk.CTkFont | None = None, entry_height:int=40, entry_text:str='', entry_placeholder_text:str='', label_text:str='', name_tag:str='', input_require=False, **kwargs):
     super().__init__(master, **kwargs)
     
     self._name_tag:str = name_tag
@@ -24,7 +24,7 @@ class TextInput(ctk.CTkFrame):
     self._note = ctk.CTkLabel(master=self, text='', text_color='red', font=font, anchor='se')
     self._note.grid(row=0, column=2, pady=(0,10), padx=0, sticky='we')
     
-    self._entry = ctk.CTkEntry(master=self, height=entry_height, font=font,placeholder_text=entry_placeholder_text) 
+    self._entry = ctk.CTkEntry(master=self, height=entry_height, font=font, placeholder_text=entry_placeholder_text) 
     self._entry.grid(row=1, column=0, columnspan=3, pady=0, padx=0, sticky='we')
     self._entry.bind("<KeyRelease>", lambda event: self.on_entry_key_release(event))
   
