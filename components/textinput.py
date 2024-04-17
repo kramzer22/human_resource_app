@@ -31,7 +31,7 @@ class TextInput(ctk.CTkFrame):
   def on_entry_key_release(self, event:any)-> None: 
     if self._key_release_handler:
       self._key_release_handler(event)
-  
+      
   def attach_handler_to_keypress_event(self, handler:callable) -> None:
     self._key_release_handler = handler
     
@@ -69,6 +69,25 @@ class TextInput(ctk.CTkFrame):
     self._entry.configure(state='disabled')
     if self._show_button:
       self._show_button.configure(state='disabled')
+      
+  def read_only(self) -> None:
+    self._entry.configure(state='readonly')
+    if self._show_button:
+      self._show_button.configure(state='disabled')
+      
+  def destroy(self):
+    # Class clean up here
+    self._name_tag = None
+    self._key_release_handler = None
+    
+    if self._show_button:
+      self._show_button.destroy()  
+    self._label.destroy()
+    self._require.destroy()
+    self._note.destroy()   
+    self._entry.destroy()
+    
+    super().destroy()
   
   @property   
   def text(self) -> str:

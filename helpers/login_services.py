@@ -38,9 +38,12 @@ class LoginServices:
     
     # if Pinger.test_server_response():
     try:
-      self._res = req.post(f'{self._URL}/login', data=data)        
-     
-    except Exception as e:
+      self._res = req.post(f'{self._URL}/login', data=data, timeout=10)        
+    except req.Timeout:
+      print('Request timeout')
+      self._res = None
+    except req.RequestException as e:
+      print('Error occured during request')
       self._res = None
     finally:
       self.user_login_result(method)  

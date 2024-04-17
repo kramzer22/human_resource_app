@@ -37,7 +37,7 @@ class ApplicationForm(ctk.CTkFrame):
     self._header = ctk.CTkLabel(master=self._form_frame, text="Applicant registration form", font=('Calibri', 24), anchor='w')
     self._header.grid(row=0, column=0, columnspan=3, pady=10, padx=10, sticky='we')
     
-    self._form_info_scrollframe = ctk.CTkScrollableFrame = ctk.CTkScrollableFrame(master=self._form_frame, orientation='vertical')
+    self._form_info_scrollframe = ctk.CTkScrollableFrame = ctk.CTkScrollableFrame(master=self._form_frame)
     self._form_info_scrollframe.grid(row=1, column=0, columnspan=3, pady=10, padx=10, sticky='nswe')
     
     self._form_info_scrollframe.grid_columnconfigure(0, weight=1)
